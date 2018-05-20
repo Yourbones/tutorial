@@ -1,0 +1,7 @@
+[client]
+database = blog
+user = root
+password = root
+port = 3306
+host = localhost
+default-character-set = utf8
