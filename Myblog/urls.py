@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 from django.conf import settings
-from blog.views import IndexView, ArchiveView
+from blog.views import IndexView, ArchiveView, TagView,TagDetailView,BlogDetailView
+
 
 urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^archive/$',ArchiveView.as_view(), name='archive'),
+    url(r'^tags/$', TagView.as_view(), name='tags'),
+    url(r'^tags/(?P<tag_name>\w+)$',TagDetailView.as_view(), name='tag_name'),
+    url(r'^blog/(?P<blog_id>\d+)$', BlogDetailView.as_view(), name='blog_id'),
 ]

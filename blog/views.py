@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.views import View
 from blog.models import Blog, Tag, Category
 from pure_pagination import PageNotAnInteger, Paginator
-# Create your views here.
+import markdown
+
 
 class IndexView(View):
     """
@@ -13,6 +14,8 @@ class IndexView(View):
     def get(self, request):
         all_blog = Blog.objects.all().order_by('-id')
 
+        for blog in all_blog:
+            blog.content = markdown.markdown(blog.content)
         # 分页
         try:
             page = request.GET.get('page', 1)
@@ -28,7 +31,7 @@ class ArchiveView(View):
 
     def get(self, request):
         all_blog = Blog.objects.all().order_by('-create_time')
-
+        counts = len(all_blog)
         # 分页
         try:
             page = request.GET.get('page', 1)
@@ -39,4 +42,69 @@ class ArchiveView(View):
 
         return render(request, 'archive.html', {
             'all_blog': all_blog,
+            'counts': counts,
+        })
+
+class TagView(View):
+
+    def get(self, request):
+        all_tag = Tag.objects.all()
+        counts = len(all_tag)
+        return render(request, 'tags.html', {
+            'all_tag': all_tag,
+            'counts': counts,
+        })
+
+class TagDetailView(View):
+
+    def get(self, request, tag_name):
+        tag = Tag.objects.filter(name=tag_name).first()
+        tag_blogs = tag.blog_set.all()
+        counts = len(tag_blogs)
+
+        # 分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        p = Paginator(tag_blogs, 3, request=request)
+        tag_blogs = p.page(page)
+        return render(request, 'tag-detail.html',{
+            'tag_blogs': tag_blogs,
+            'tag_name': tag_name,
+        })
+
+class BlogDetailView(View):
+    """
+    博客详情页
+    """
+    def get(self, request, blog_id):
+        blog = Blog.objects.get(id=blog_id)
+        # 将博客内容用markdown显示出来
+        blog.content = markdown.markdown(blog.content)
+
+        has_prev = False
+        has_next = False
+        id_prev = id_next = int(blog_id)                          # 初始化变量
+        blog_id_max = Blog.objects.all().order_by('-id').first()  # 通过筛选获得最后一个数据的id
+        id_max = blog_id_max.id
+        while not has_prev and id_prev >= 1:
+            blog_prev = Blog.objects.filter(id=id_prev - 1).first() # 假设博客删除，则前面id不存在
+            if not blog_prev:
+                id_prev -= 1
+            else:
+                has_prev = True
+        while not has_next and id_next <= id_max:
+            blog_next = Blog.objects.filter(id=id_next + 1).first()
+            if not blog_next:
+                id_next += 1
+            else:
+                has_next = True
+        return render(request, 'blog-detail.html', {
+            'blog': blog,
+            'blog_prev': blog_prev,
+            'blog_next': blog_next,
+            'has_prev': has_prev,
+            'has_next': has_next,
         })
