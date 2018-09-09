@@ -1,11 +1,18 @@
 # -*- coding:utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.http import HttpResponse
 from blog.models import Blog, Tag, Category, Comment, Counts
 from blog.forms import  CommentForm
 from pure_pagination import PageNotAnInteger, Paginator
 import markdown
+
+# 配置404 500错误页面
+def page_not_found(request):
+    return render(request, '404.html')
+
+def page_errors(request):
+    return render(request, '500.html')
 
 
 class IndexView(View):
@@ -73,7 +80,7 @@ class TagView(View):
 class TagDetailView(View):
 
     def get(self, request, tag_name):
-        tag = Tag.objects.filter(name=tag_name).first()
+        tag = get_object_or_404(Tag, name=tag_name)
         tag_blogs = tag.blog_set.all()
         counts = len(tag_blogs)
 
@@ -95,7 +102,7 @@ class BlogDetailView(View):
     博客详情页
     """
     def get(self, request, blog_id):
-        blog = Blog.objects.get(id=blog_id)
+        blog = get_object_or_404(Blog, pk=blog_id)
         all_comment = Comment.objects.filter(blog=blog)
         # 将博客内容用markdown显示出来
         blog.content = markdown.markdown(blog.content)
