@@ -16,7 +16,7 @@
     <link href="{% static 'css_js/main.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css_js/extra.css' %}" rel="stylesheet" type="text/css">
 
-    <link rel="alternate" href="http://www.geerniya.cn/rss" title="往事如烟的博客" type="application/atom+xml">
+    <link rel="alternate" href="http://www.geerniya.cn/rss" title="秋意正凉的博客" type="application/atom+xml">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'image/logo.ico' %}">
     <link rel="canonical" href="http://www.geerniya.cn/">
 
@@ -64,7 +64,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-
+    <script>{% block content_js %}{% endblock %}</script>
     <title> {% block title %}{% endblock %}</title>
 
     <style type="text/css">.fancybox-margin {
@@ -86,11 +86,11 @@
                 <div class="custom-logo-site-title">
                     <a href="http://www.geerniya.cn/" class="brand" rel="start" style="opacity: 1;">
                         <span class="logo-line-before"><i></i></span>
-                        <span class="site-title" style="opacity: 1; top: 0px;">往事如烟的博客</span>
+                        <span class="site-title" style="opacity: 1; top: 0px;">秋意正凉的博客</span>
                         <span class="logo-line-after"><i></i></span>
                     </a>
                 </div>
-                <p class="site-subtitle" style="opacity: 1; top: 0px;">To be a better man</p>
+                <p class="site-subtitle" style="opacity: 1; top: 0px;">每天变得好一点</p>
             </div>
 
             <div class="site-nav-toggle">
@@ -157,28 +157,28 @@
                     <section class="site-overview sidebar-panel sidebar-panel-active">
                         <div class="site-author motion-element" itemprop="author" itemscope=""
                              itemtype="http://schema.org/Person">
-                            <img class="site-author-image" itemprop="image" src="{% static 'image/mayun.png' %}"
+                            <img class="site-author-image" itemprop="image" src="{% static 'image/xiamu.jpg' %}"
                                  alt="geerniya">
-                            <p class="site-author-name" itemprop="name">geerniya</p>
-                            <p class="site-description motion-element" itemprop="description">请在此处添加一句鸡汤格言</p>
+                            <p class="site-author-name" itemprop="name">秋意正凉</p>
+                            <p class="site-description motion-element" itemprop="description">饮食有味，起居有常</p>
                         </div>
                         <nav class="site-state motion-element">
 
                             <div class="site-state-item site-state-posts">
                                 <a href="http://www.geerniya.cn/archive/">
-                                    <span class="site-state-item-count">15</span>
+                                    <span class="site-state-item-count">{{ blog_nums }}</span>
                                     <span class="site-state-item-name">日志</span>
                                 </a>
                             </div>
 
                             <div class="site-state-item site-state-categories">
-                                <span class="site-state-item-count">3</span>
+                                <span class="site-state-item-count">{{ cate_nums }}</span>
                                 <span class="site-state-item-name">分类</span>
                             </div>
 
                             <div class="site-state-item site-state-tags">
                                 <a href="http://www.geerniya.cn/tags/">
-                                    <span class="site-state-item-count">8</span>
+                                    <span class="site-state-item-count">{{ tag_nums }}</span>
                                     <span class="site-state-item-name">标签</span>
                                 </a>
                             </div>
@@ -195,23 +195,23 @@
                         <div class="links-of-author motion-element">
 
                                 <span class="links-of-author-item">
-                                        <a href="https://github.com/geerniya" target="_blank" title="GitHub">
+                                        <a href="https://github.com/Yourbones" target="_blank" title="GitHub">
                                             <i class="fa fa-fw fa-github"></i>
                                             GitHub
                                         </a>
                                   </span>
 
                             <span class="links-of-author-item">
-                                    <a href="https://www.zhihu.com/people/geerniya" target="_blank" title="知乎">
+                                    <a href="#" target="_blank" title="知乎">
                                         <i class="fa fa-book"></i>
                                         知乎
                                     </a>
                                 </span>
 
                             <span class="links-of-author-item">
-                                    <a href="http://blog.csdn.net/geerniya" target="_blank" title="知乎">
+                                    <a href="https://www.jianshu.com/u/8c6979d8ab4f" target="_blank" title="简书">
                                         <i class="fa fa-fw fa-globe"></i>
-                                        博客
+                                        简书
                                     </a>
                                 </span>
 
@@ -247,18 +247,18 @@
     <footer id="footer" class="footer">
         <div class="footer-inner">
             <div class="copyright">
-                © 2017 -
-                <span itemprop="copyrightYear">2018</span>
+                © 2018 -
+                <span itemprop="copyrightYear">2019</span>
                 <span class="with-love">
                         <i class="fa fa-heart"></i>
                     </span>
-                <span class="author" itemprop="copyrightHolder">geerniya</span>
+                <span class="author" itemprop="copyrightHolder">秋意正凉</span>
             </div>
             <div class="powered-by">
-                豫ICP备18002345号-1
+                浙ICP备18035124号-1
             </div>
             <div class="theme-info">
-                Supported by <a href="https://www.aliyun.com/">阿里云</a>
+                Supported by <a href="https://cloud.tencent.com">腾讯云</a>
             </div>
         </div>
     </footer>
@@ -307,7 +307,6 @@
         s.parentNode.insertBefore(bp, s);
     })();
 </script>
-
 
 </body>
 </html>

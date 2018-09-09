@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 from django.conf import settings
-from blog.views import IndexView, ArchiveView, TagView,TagDetailView,BlogDetailView
+from blog.views import IndexView, ArchiveView, TagView,\
+    TagDetailView, BlogDetailView, AddCommentView, CategoryDetailView
 
 
 urlpatterns = [
@@ -27,4 +28,6 @@ urlpatterns = [
     url(r'^tags/$', TagView.as_view(), name='tags'),
     url(r'^tags/(?P<tag_name>\w+)$',TagDetailView.as_view(), name='tag_name'),
     url(r'^blog/(?P<blog_id>\d+)$', BlogDetailView.as_view(), name='blog_id'),
+    url(r'^add_comment/$', AddCommentView.as_view(), name='add_comment'),
+    url(r'^category/(?P<category_name>\w+)/$', CategoryDetailView.as_view(), name='category_name'),
 ]
