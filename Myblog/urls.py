@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
+from Myblog.settings import STATIC_ROOT
 from django.conf import settings
 from blog.views import IndexView, ArchiveView, TagView,\
     TagDetailView, BlogDetailView, AddCommentView, CategoryDetailView, page_not_found, page_errors
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^blog/(?P<blog_id>\d+)$', BlogDetailView.as_view(), name='blog_id'),
     url(r'^add_comment/$', AddCommentView.as_view(), name='add_comment'),
     url(r'^category/(?P<category_name>\w+)/$', CategoryDetailView.as_view(), name='category_name'),
+    url(r'^static/(?P<path>.*)/$', 'django.views.static.serve',{'document_root': STATIC_ROOT}),
 ]
 hander404 = 'blog.views.page_not_found'
 hander505 = 'blog.views.page_errors'
